@@ -19,6 +19,7 @@
 <PreferenceScreen 
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:settings="http://schemas.android.com/apk/res/com.android.settings"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:title="@string/lockscreen_ui_title">
 
     <PreferenceCategory
@@ -69,6 +70,18 @@
     </PreferenceCategory>
 
     <PreferenceCategory
+            android:title="Custom Lockscreen Clock">
+
+        <org.derpfest.support.preferences.SystemSettingListPreference
+            android:entries="@array/clock_style_entries"
+            android:title="Custom Clock style"
+            android:key="clock_style"
+            android:defaultValue="0"
+            android:entryValues="@array/clock_style_values" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
         android:title="@string/weather_category_title">
 
         <org.derpfest.support.preferences.SystemSettingSwitchPreference
@@ -84,7 +97,7 @@
             android:defaultValue="false"
             android:dependency="lockscreen_weather_enabled" />
 
-        <com.everest.support.preferences.SystemSettingSwitchPreference
+        <org.derpfest.support.preferences.SystemSettingSwitchPreference
             android:key="lockscreen_weather_text"
             android:title="@string/lockscreen_weather_text_title"
             android:summary="@string/lockscreen_weather_text_summary"
