@@ -54,11 +54,8 @@ import com.android.settingslib.search.SearchIndexable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
-import java.util.stream.Collectors;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -68,26 +65,10 @@ public class LockscreenUI extends SettingsPreferenceFragment implements OnPrefer
     private static final String FINGERPRINT_VIB = "fingerprint_success_vib";
     private static final String KEY_WEATHER = "lockscreen_weather_enabled";
 
-    private static final String MAIN_WIDGET_1_KEY = "main_custom_widgets1";
-    private static final String MAIN_WIDGET_2_KEY = "main_custom_widgets2";
-    private static final String EXTRA_WIDGET_1_KEY = "custom_widgets1";
-    private static final String EXTRA_WIDGET_2_KEY = "custom_widgets2";
-    private static final String EXTRA_WIDGET_3_KEY = "custom_widgets3";
-    private static final String EXTRA_WIDGET_4_KEY = "custom_widgets4";
-
     private FingerprintManager mFingerprintManager;
     private Preference mWeather;
     private OmniJawsClient mWeatherClient;
     private SwitchPreferenceCompat mFingerprintVib;
-
-    private Preference mMainWidget1;
-    private Preference mMainWidget2;
-    private Preference mExtraWidget1;
-    private Preference mExtraWidget2;
-    private Preference mExtraWidget3;
-    private Preference mExtraWidget4;
-
-    private Map<Preference, String> widgetKeysMap = new HashMap<>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -111,25 +92,6 @@ public class LockscreenUI extends SettingsPreferenceFragment implements OnPrefer
         mWeather = (Preference) findPreference(KEY_WEATHER);
         mWeatherClient = new OmniJawsClient(getContext());
         updateWeatherSettings();
-
-        mMainWidget1 = findPreference(MAIN_WIDGET_1_KEY);
-        mMainWidget2 = findPreference(MAIN_WIDGET_2_KEY);
-        mExtraWidget1 = findPreference(EXTRA_WIDGET_1_KEY);
-        mExtraWidget2 = findPreference(EXTRA_WIDGET_2_KEY);
-        mExtraWidget3 = findPreference(EXTRA_WIDGET_3_KEY);
-        mExtraWidget4 = findPreference(EXTRA_WIDGET_4_KEY);
-
-        List<Preference> widgetPreferences = Arrays.asList(mMainWidget1, mMainWidget2, mExtraWidget1, mExtraWidget2, mExtraWidget3, mExtraWidget4);
-        for (Preference widgetPref : widgetPreferences) {
-            widgetPref.setOnPreferenceChangeListener(this);
-            widgetKeysMap.put(widgetPref, "");
-        }
-
-        String mainWidgets = Settings.System.getString(getActivity().getContentResolver(), "lockscreen_widgets");
-        String extraWidgets = Settings.System.getString(getActivity().getContentResolver(), "lockscreen_widgets_extras");
-
-        setWidgetValues(mainWidgets, mMainWidget1, mMainWidget2);
-        setWidgetValues(extraWidgets, mExtraWidget1, mExtraWidget2, mExtraWidget3, mExtraWidget4);
     }
 
     private void updateWeatherSettings() {
@@ -158,11 +120,6 @@ public class LockscreenUI extends SettingsPreferenceFragment implements OnPrefer
             boolean value = (Boolean) objValue;
             Settings.System.putInt(getActivity().getContentResolver(),
                     Settings.System.FINGERPRINT_SUCCESS_VIB, value ? 1 : 0);
-            return true;
-        }
-        else if (widgetKeysMap.containsKey(preference)) {
-            widgetKeysMap.put(preference, String.valueOf(newValue));
-            updateWidgetPreferences();
             return true;
         }
         return false;
