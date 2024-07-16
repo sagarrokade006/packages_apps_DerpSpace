@@ -70,6 +70,7 @@ public class LockScreenClock extends SettingsPreferenceFragment
     private List<Preference> mWidgetPreferences;
 
     private Preference mClockStyle;
+    private Preference mDeviceInfoWidgetPref;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -83,8 +84,9 @@ public class LockScreenClock extends SettingsPreferenceFragment
         mExtraWidget2 = findPreference(EXTRA_WIDGET_2_KEY);
         mExtraWidget3 = findPreference(EXTRA_WIDGET_3_KEY);
         mExtraWidget4 = findPreference(EXTRA_WIDGET_4_KEY);
+        mDeviceInfoWidgetPref = (Preference) findPreference("lockscreen_display_widgets");
 
-        mWidgetPreferences = Arrays.asList(mMainWidget1, mMainWidget2, mExtraWidget1, mExtraWidget2, mExtraWidget3, mExtraWidget4);
+        mWidgetPreferences = Arrays.asList(mMainWidget1, mMainWidget2, mExtraWidget1, mExtraWidget2, mExtraWidget3, mExtraWidget4, mDeviceInfoWidgetPref);
 
         final boolean mClockStyleEnabled = Settings.System.getIntForUser(getActivity().getContentResolver(), "clock_style", 0, UserHandle.USER_CURRENT) != 0;
 
