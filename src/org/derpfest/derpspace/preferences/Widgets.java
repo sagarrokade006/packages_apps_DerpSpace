@@ -1,4 +1,4 @@
-package com.android.settings.preferences;
+package org.derpfest.derpspace.preferences;
 
 import android.content.ContentResolver;
 import android.content.Context;
@@ -175,6 +175,8 @@ public class Widgets extends RelativeLayout {
             case "bt":
                 setUpWidgetResources(widgetView, R.drawable.ic_bt, R.string.bt);
                 break;
+            case "sound_engine":
+                setUpWidgetResources(widgetView, R.drawable.ic_settings_sound, R.string.sound_engine_title);
             default:
                 break;
         }
