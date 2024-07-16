@@ -39,6 +39,10 @@
         android:key="lockscreen_widgets"
         android:title="@string/lockscreen_widgets_title">
 
+        <Preference
+            android:key="lockscreen_widgets_preview"
+            settings:layout="@layout/lockscreen_widgets_preview" />
+
         <org.derpfest.support.preferences.SystemSettingSwitchPreference
             android:key="lockscreen_widgets_enabled"
             android:title="@string/lockscreen_widgets_enabled_title"
