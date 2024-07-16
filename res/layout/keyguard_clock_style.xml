@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.android.settings.preferences.lockscreen.ClockStyle
+<org.derpfest.derpspace.preferences.ClockStyle
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:gravity="center"
     android:layout_width="match_parent"
@@ -158,4 +158,4 @@
         android:layout_height="wrap_content">
         <include layout="@layout/keyguard_clock_minimal3" />
     </LinearLayout>
-</com.android.settings.preferences.lockscreen.ClockStyle>
+</org.derpfest.derpspace.preferences.ClockStyle>

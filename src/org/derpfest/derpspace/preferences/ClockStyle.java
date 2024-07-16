@@ -1,4 +1,4 @@
-package com.android.settings.preferences;
+package org.derpfest.derpspace.preferences;
 
 import android.content.ContentResolver;
 import android.content.Context;
