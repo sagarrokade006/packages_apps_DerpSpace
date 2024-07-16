@@ -31,6 +31,7 @@ import androidx.preference.PreferenceScreen;
 import androidx.preference.SwitchPreferenceCompat;
 
 import com.android.internal.logging.nano.MetricsProto.MetricsEvent;
+import com.android.internal.util.derp.derpUtils;
 
 import com.android.settings.R;
 import com.android.settings.search.BaseSearchIndexProvider;
@@ -46,10 +47,12 @@ public class QuickSettings extends SettingsPreferenceFragment implements OnPrefe
     private static final String KEY_SHOW_BRIGHTNESS_SLIDER = "qs_show_brightness_slider";
     private static final String KEY_BRIGHTNESS_SLIDER_POSITION = "qs_brightness_slider_position";
     private static final String KEY_SHOW_AUTO_BRIGHTNESS = "qs_show_auto_brightness";
+    private static final String KEY_QS_COMPACT_PLAYER  = "qs_compact_media_player_mode";
 
     private ListPreference mShowBrightnessSlider;
     private ListPreference mBrightnessSliderPosition;
     private SwitchPreferenceCompat mShowAutoBrightness;
+    private Preference mQsCompactPlayer;
 
     @Override
     public void onCreate(Bundle icicle) {
@@ -76,6 +79,9 @@ public class QuickSettings extends SettingsPreferenceFragment implements OnPrefe
         } else {
             prefSet.removePreference(mShowAutoBrightness);
         }
+
+        mQsCompactPlayer = (Preference) findPreference(KEY_QS_COMPACT_PLAYER);
+        mQsCompactPlayer.setOnPreferenceChangeListener(this);
     }
 
     @Override
@@ -86,6 +92,10 @@ public class QuickSettings extends SettingsPreferenceFragment implements OnPrefe
             mBrightnessSliderPosition.setEnabled(value > 0);
             if (mShowAutoBrightness != null)
                 mShowAutoBrightness.setEnabled(value > 0);
+            return true;
+        }
+        else if (preference == mQsCompactPlayer) {
+            systemUtils.showSystemUIRestartDialog(getActivity());
             return true;
         }
         return false;
