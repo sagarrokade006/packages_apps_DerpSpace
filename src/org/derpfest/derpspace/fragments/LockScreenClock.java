@@ -167,7 +167,7 @@ public class LockScreenClock extends SettingsPreferenceFragment
 
     @Override
     public int getMetricsCategory() {
-        return MetricsProto.MetricsEvent.EVEREST;
+        return MetricsProto.MetricsEvent.DERP;
     }
 
     /**

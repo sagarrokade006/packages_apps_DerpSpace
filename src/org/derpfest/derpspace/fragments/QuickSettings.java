@@ -95,7 +95,7 @@ public class QuickSettings extends SettingsPreferenceFragment implements OnPrefe
             return true;
         }
         else if (preference == mQsCompactPlayer) {
-            systemUtils.showSystemUIRestartDialog(getActivity());
+            derpUtils.showSystemUIRestartDialog(getActivity());
             return true;
         }
         return false;
