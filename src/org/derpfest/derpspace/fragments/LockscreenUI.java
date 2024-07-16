@@ -42,6 +42,7 @@ import androidx.preference.PreferenceScreen;
 import androidx.preference.SwitchPreferenceCompat;
 
 import com.android.internal.logging.nano.MetricsProto.MetricsEvent;
+import com.android.internal.util.derp.OmniJawsClient;
 
 import com.android.settings.R;
 import com.android.settings.SettingsPreferenceFragment;
@@ -61,8 +62,11 @@ import java.util.regex.Pattern;
 public class LockscreenUI extends SettingsPreferenceFragment implements OnPreferenceChangeListener {
 
     private static final String FINGERPRINT_VIB = "fingerprint_success_vib";
+    private static final String KEY_WEATHER = "lockscreen_weather_enabled";
 
     private FingerprintManager mFingerprintManager;
+    private Preference mWeather;
+    private OmniJawsClient mWeatherClient;
     private SwitchPreferenceCompat mFingerprintVib;
 
     @Override
@@ -83,6 +87,19 @@ public class LockscreenUI extends SettingsPreferenceFragment implements OnPrefer
                 Settings.System.FINGERPRINT_SUCCESS_VIB, 1) == 1));
             mFingerprintVib.setOnPreferenceChangeListener(this);
         }
+
+        mWeather = (Preference) findPreference(KEY_WEATHER);
+        mWeatherClient = new OmniJawsClient(getContext());
+        updateWeatherSettings();
+    }
+
+    private void updateWeatherSettings() {
+        if (mWeatherClient == null || mWeather == null) return;
+
+        boolean weatherEnabled = mWeatherClient.isOmniJawsEnabled();
+        mWeather.setEnabled(weatherEnabled);
+        mWeather.setSummary(weatherEnabled ? R.string.lockscreen_weather_summary :
+            R.string.lockscreen_weather_enabled_info);
     }
 
     @Override
@@ -93,6 +110,7 @@ public class LockscreenUI extends SettingsPreferenceFragment implements OnPrefer
     @Override
     public void onResume() {
         super.onResume();
+         updateWeatherSettings();
     }
 
     @Override
